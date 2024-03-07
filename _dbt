@@ -292,6 +292,18 @@ _dbt_run() {
         '*:: :_dbt_list_models'
 }
 
+
+# Provides arguments for dbt run
+_dbt_compile() {
+
+    _arguments -C -s -S -n \
+        $common_test_run_build_args \
+        $profile_args \
+        --full-refresh"[perform full-refresh]" \
+        '(-m --model)'{-m,--model}"[specify the models to include]:models:_dbt_list_models"  \
+        '*:: :_dbt_list_models'
+}
+
 # Provides arguments for dbt ls / list
 _dbt_list() {
 
@@ -377,6 +389,9 @@ _dbt() {
              (run)
                  _dbt_run && ret=0
              ;;
+             (compile)
+                 _dbt_compile && ret=0
+            ;;
              (test)
                  _dbt_test && ret=0
              ;;
